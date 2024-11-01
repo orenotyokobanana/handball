@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>俺のチョコバナナ</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">俺のチョコバナナ</h1>
+        <button id="lotteryButton" onclick="drawLottery()">運試し</button>
+        <div id="result" class="result-text"></div>
+        <div id="note" class="note"></div>
+        <div id="confetti" class="confetti"></div> <!-- コンフェッティ用の要素 -->
+    </div>
+
+    <script>
+        function drawLottery() {
+            const result = document.getElementById("result");
+            const note = document.getElementById("note");
+            const button = document.getElementById("lotteryButton");
+            const container = document.querySelector(".container");
+            const confetti = document.getElementById("confetti");
+
+            result.textContent = "バナナ運計測中...";
+            result.classList.add("loading");
+            button.disabled = true;
+
+            setTimeout(() => {
+                const random = Math.random();
+                if (random < 1.0) {
+                    result.textContent = "50円分券";
+                    note.textContent = "「俺のチョコバナナ」でのみ利用できます。ほかの店舗では利用できません。";
+                    result.classList.add("winner"); // 当選時のアニメーションクラス
+                    container.classList.add("winner-bg"); // 背景色を金色に変更
+                    confetti.classList.add("confetti-animation"); // コンフェッティのアニメーションを追加
+
+                    setTimeout(() => {
+                        container.classList.remove("winner-bg"); // 背景色を戻す
+                        confetti.classList.remove("confetti-animation"); // コンフェッティを終了
+                    }, 5000);
+                } else {
+                    result.textContent = "ハズレ";
+                    note.textContent = "";
+                }
+                result.classList.remove("loading");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
